@@ -5,38 +5,48 @@ public class PruebaAgenda {
 
     Agenda agenda = new Agenda();
 
-    Contacto carlos = new Contacto(
-        "Carlos Gomez",
-        "3001234567",
-        "carlos@email.com"
+    // Crear contactos
+    agenda.agregarContacto(
+        new Contacto("Carlos Gomez", "3001234567", "carlos@email.com")
     );
 
-    Contacto ana = new Contacto(
-        "Ana Perez",
-        "3107654321",
-        "ana@email.com"
+    agenda.agregarContacto(
+        new Contacto("Ana Perez", "3107654321", "ana@email.com")
     );
 
-    agenda.agregarContacto(carlos);
-    agenda.agregarContacto(ana);
-
-    // Intentar registrar un nombre duplicado
-    Contacto carlosDuplicado = new Contacto(
-        "Carlos Gomez",
-        "3111111111",
-        "otro@email.com"
+    agenda.agregarContacto(
+        new Contacto("Beatriz Lopez", "3201234567", "beatriz@email.com")
     );
 
-    agenda.agregarContacto(carlosDuplicado);
+    // Crear grupos
+    agenda.agregarGrupo("Trabajo");
+    agenda.agregarGrupo("Amigos");
 
-    // Buscar un contacto existente
-    System.out.println(
-        agenda.buscarContacto("Ana Perez")
-    );
+    // Intentar crear un grupo duplicado
+    agenda.agregarGrupo("Trabajo");
 
-    // Buscar un contacto inexistente
-    System.out.println(
-        agenda.buscarContacto("Pedro Lopez")
-    );
+    // Asociar contactos
+    agenda.agregarContactoAGrupo("Carlos Gomez", "Trabajo");
+    agenda.agregarContactoAGrupo("Ana Perez", "Trabajo");
+    agenda.agregarContactoAGrupo("Ana Perez", "Amigos");
+    agenda.agregarContactoAGrupo("Beatriz Lopez", "Amigos");
+
+    // Listar grupos
+    agenda.listarGrupos();
+
+    // Mostrar miembros de cada grupo
+    agenda.mostrarContactosPorGrupo("Trabajo");
+    agenda.mostrarContactosPorGrupo("Amigos");
+
+    // Probar las validaciones
+    agenda.agregarContactoAGrupo("Pedro Lopez", "Trabajo");
+    agenda.agregarContactoAGrupo("Carlos Gomez", "Familia");
+
+    // Mostrar grupo vacío
+    agenda.agregarGrupo("Familia");
+    agenda.mostrarContactosPorGrupo("Familia");
+
+    // Mostrar grupo inexistente
+    agenda.mostrarContactosPorGrupo("Universidad");
   }
 }

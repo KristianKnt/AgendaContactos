@@ -98,5 +98,112 @@ public class Agenda {
   }
 
 
+  public void agregarGrupo(String nombreGrupo) {
+
+    if (grupos.contains(nombreGrupo)) {
+      System.out.println(
+          "Error: El grupo '" + nombreGrupo + "' ya existe"
+      );
+      return;
+    }
+
+    grupos.add(nombreGrupo);
+    contactosPorGrupo.put(nombreGrupo, new TreeSet<>());
+
+    System.out.println("Grupo '" + nombreGrupo + "' creado");
+  }
+
+  public void agregarContactoAGrupo(
+      String nombreContacto, String nombreGrupo) {
+
+    // Validar que exista el contacto
+    if (!contactos.containsKey(nombreContacto)) {
+      System.out.println(
+          "Error: El contacto '" + nombreContacto + "' no existe"
+      );
+      return;
+    }
+
+    // Validar que exista el grupo
+    if (!grupos.contains(nombreGrupo)) {
+      System.out.println(
+          "Error: El grupo '" + nombreGrupo + "' no existe"
+      );
+      return;
+    }
+
+    // Obtener el conjunto de contactos del grupo
+    Set<String> nombresContactos =
+        contactosPorGrupo.get(nombreGrupo);
+
+    // Agregar el nombre al grupo
+    boolean agregado = nombresContactos.add(nombreContacto);
+
+    if (agregado) {
+      System.out.println(
+          "Contacto agregado al grupo '" + nombreGrupo + "'"
+      );
+    } else {
+      System.out.println(
+          "El contacto '" + nombreContacto
+              + "' ya pertenece al grupo '" + nombreGrupo + "'"
+      );
+    }
+  }
+
+
+
+
+  public void listarGrupos() {
+
+    System.out.println("\n--- LISTA DE GRUPOS ---");
+
+    if (grupos.isEmpty()) {
+      System.out.println("No hay grupos registrados");
+      return;
+    }
+
+    for (String grupo : grupos) {
+      System.out.println("- " + grupo);
+    }
+  }
+
+
+
+  public void mostrarContactosPorGrupo(String nombreGrupo) {
+
+    // Validar que el grupo exista
+    if (!grupos.contains(nombreGrupo)) {
+      System.out.println(
+          "Error: El grupo '" + nombreGrupo + "' no existe"
+      );
+      return;
+    }
+
+    // Obtener los nombres de los contactos del grupo
+    Set<String> nombresContactos =
+        contactosPorGrupo.get(nombreGrupo);
+
+    // Comprobar si el grupo esta vacio
+    if (nombresContactos.isEmpty()) {
+      System.out.println(
+          "El grupo '" + nombreGrupo + "' no tiene contactos"
+      );
+      return;
+    }
+
+    System.out.println("\nContactos en '" + nombreGrupo + "':");
+
+    // Buscar y mostrar los objetos Contacto
+    for (String nombre : nombresContactos) {
+      Contacto contacto = contactos.get(nombre);
+
+      if (contacto != null) {
+        System.out.println("- " + contacto);
+      }
+    }
+  }
+
+
 
 }
